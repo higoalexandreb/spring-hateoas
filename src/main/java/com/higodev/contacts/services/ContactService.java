@@ -2,7 +2,6 @@ package com.higodev.contacts.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +21,18 @@ public class ContactService {
 		return repository.findAll();
 	}
 	
-	public Optional<Contact> findOne(UUID contactId){
+	@Transactional(readOnly=true)
+	public Optional<Contact> findById(long contactId){
 		return repository.findById(contactId);
 	}
 	
+	@Transactional
 	public Contact save(Contact contact) {
 		return repository.save(contact);
 	}
 	
-	public Contact update(Contact contact, UUID contactId) {
+	@Transactional
+	public Contact update(Contact contact, long contactId) {
 		return repository.findById(contactId).map(c -> {
 			c.setEmail(contact.getEmail());
 			c.setName(contact.getName());
@@ -39,7 +41,8 @@ public class ContactService {
 		}).orElse(null);
 	}
 	
-	public void delete(UUID contactId) {
+	@Transactional
+	public void delete(long contactId) {
 		Optional<Contact> contact = repository.findById(contactId);
 		
 		if(contact.isPresent())

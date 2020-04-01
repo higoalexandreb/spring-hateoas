@@ -1,7 +1,6 @@
 package com.higodev.contacts.models;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,8 +20,8 @@ public class Contact extends ResourceSupport implements Serializable{
 	private static final long serialVersionUID = -6827773046529365962L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID contactId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long contactId;
 	
 	@Column(nullable = false, length = 100)
 	private String name;
